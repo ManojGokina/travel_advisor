@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from "react";
+import React from "react";
 import {
   CircularProgress,
   Grid,
@@ -11,16 +11,8 @@ import {
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 import useStyles from "./styles";
 
-const List = ({ places, childClicked, isLoading , type, setType, rating, setRating }) => {
+const List = ({ places, isLoading , type, setType, rating, setRating }) => {
   const classes = useStyles();
-  const [elemRefs, setElemsRefs] = useState([]);
-  useEffect(() => {
-    const refs = Array(places?.length)
-      .fill()
-      .map((_, i) => elemRefs[i] || createRef());
-
-    setElemsRefs(refs);
-  }, [places, elemRefs]);
 
   return (
     <div className={classes.container}>
@@ -36,9 +28,9 @@ const List = ({ places, childClicked, isLoading , type, setType, rating, setRati
           <FormControl className={classes.formControl}>
             <InputLabel>Type</InputLabel>
             <Select value={type} onChange={(e) => setType(e.target.value)}>
-              <MenuItem value="Restaurants">Restaurants</MenuItem>
-              <MenuItem value="Hotels">Hotels</MenuItem>
-              <MenuItem value="Attractions">Attractions</MenuItem>
+              <MenuItem value="restaurants">Restaurants</MenuItem>
+              <MenuItem value="hotels">Hotels</MenuItem>
+              <MenuItem value="attractions">Attractions</MenuItem>
             </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
@@ -55,8 +47,6 @@ const List = ({ places, childClicked, isLoading , type, setType, rating, setRati
               <Grid item key={i} xs={12}>
                 <PlaceDetails
                   place={place}
-                  selected={Number(childClicked) === i}
-                  refProp={elemRefs[i]}
                 />
               </Grid>
             ))}
